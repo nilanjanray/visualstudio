@@ -1,15 +1,17 @@
-name: Super-Linter
+name: Helloworld
 
 # Run this workflow ever time code is pushed to a branch
 # other than `main` in your repository
-on: push
+on:
+  pull_request:
+  push:
 
 jobs:
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
   super-lint:
     # Name the Job
-    name: Lint code base
+    name: Auto Commit
     # Set the type of machine to run on
     runs-on: ubuntu-latest
 
@@ -18,9 +20,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Runs the Super-Linter action
-      - name: Run Super-Linter
-        uses: github/super-linter@v3
-        env:
-          DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply php-cs-fixer changes
